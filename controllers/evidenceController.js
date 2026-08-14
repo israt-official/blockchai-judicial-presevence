@@ -85,8 +85,26 @@ const getMyEvidence = async (req, res) => {
     });
   }
 };
+const getAllEvidence = async (req, res) => {
+  try {
+    const evidence = await Evidence.find()
+      .populate("uploadedBy", "name email role")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      message: "All evidence fetched successfully",
+      evidence,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to fetch evidence",
+      error: error.message,
+    });
+  }
+};
 
 module.exports = {
   uploadEvidence,
   getMyEvidence,
+  getAllEvidence,
 };

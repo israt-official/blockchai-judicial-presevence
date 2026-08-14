@@ -2,6 +2,7 @@ const express = require("express");
 const {
   uploadEvidence,
   getMyEvidence,
+  getAllEvidence,
 } = require("../controllers/evidenceController");
 
 const { protect } = require("../middleware/authMiddleware");
@@ -24,5 +25,12 @@ router.get(
   authorizeRoles("POLICE", "FORENSIC"),
   getMyEvidence
 );
+router.get(
+   "/all",
+  protect,
+  authorizeRoles("JUDGE"),
+  getAllEvidence
+);
+
 
 module.exports = router;
